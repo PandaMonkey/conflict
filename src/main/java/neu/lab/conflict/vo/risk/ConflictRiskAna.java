@@ -6,6 +6,7 @@ import java.util.Map;
 
 import neu.lab.conflict.Conf;
 import neu.lab.conflict.container.FinalClasses;
+import neu.lab.conflict.util.MavenUtil;
 import neu.lab.conflict.vo.ClassVO;
 import neu.lab.conflict.vo.DepJar;
 import neu.lab.conflict.vo.NodeConflict;
@@ -45,6 +46,7 @@ public class ConflictRiskAna {
 	// }
 
 	public static ConflictRiskAna getConflictRiskAna(NodeConflict nodeConflict) {
+		MavenUtil.i().getLog().info("risk ana for:"+nodeConflict.toString());
 		ConflictRiskAna riskAna = new ConflictRiskAna(nodeConflict);
 		List<JarRiskAna> jarRiskAnas = new ArrayList<JarRiskAna>();
 		for (DepJar depJar : nodeConflict.getDepJars()) {

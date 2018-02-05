@@ -6,7 +6,7 @@ import java.io.PrintStream;
 
 public class SootUtil {
 	public static void modifyLogOut() {
-		File outDir = UtilGetter.i().getBuildDir();
+		File outDir = MavenUtil.i().getBuildDir();
 		if (!outDir.exists()) {
 			outDir.mkdirs();
 		}

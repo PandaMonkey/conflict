@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import neu.lab.conflict.util.UtilGetter;
+import neu.lab.conflict.util.MavenUtil;
 import neu.lab.conflict.vo.ClassVO;
 import neu.lab.conflict.vo.DepJar;
 
@@ -56,7 +56,7 @@ public class FinalClasses {
 				}
 			}
 		}
-		UtilGetter.i().getLog().info("final class size:" + loadClses.size());
+		MavenUtil.i().getLog().info("final class size:" + loadClses.size());
 	}
 
 	private void loadAndThrow(ClassVO oldCls, ClassVO newCls) {

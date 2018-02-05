@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import neu.lab.conflict.Conf;
 import neu.lab.conflict.graph.Book;
 import neu.lab.conflict.graph.Path;
 import neu.lab.conflict.vo.NodeAdapter;
@@ -45,7 +46,7 @@ public class NodeRiskAna {
 	public List<String> getJarFilePaths() {
 		List<String> paths = new ArrayList<String>();
 		for (NodeAdapter nodeAdapter : jarPath) {
-			paths.add(nodeAdapter.getFilePath());
+			paths.addAll(nodeAdapter.getFilePath());
 		}
 		return paths;
 	}
@@ -74,10 +75,12 @@ public class NodeRiskAna {
 				}
 			}
 		}
-		if (confuseMthds.size() != 0) {
-			sb.append("can't find path for " + confuseMthds.size() + " risk method+\n");
-			for (String confuseMthd : confuseMthds) {
-				sb.append("confuseMthd:" + confuseMthd + "\n");
+		if (Conf.PRINT_CONFUSED_METHOD) {
+			if (confuseMthds.size() != 0) {
+				sb.append("can't find path for " + confuseMthds.size() + " risk method+\n");
+				for (String confuseMthd : confuseMthds) {
+					sb.append("confuseMthd:" + confuseMthd + "\n");
+				}
 			}
 		}
 

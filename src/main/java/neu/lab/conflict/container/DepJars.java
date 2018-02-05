@@ -3,7 +3,7 @@ package neu.lab.conflict.container;
 import java.util.HashSet;
 import java.util.Set;
 
-import neu.lab.conflict.util.UtilGetter;
+import neu.lab.conflict.util.MavenUtil;
 import neu.lab.conflict.vo.DepJar;
 import neu.lab.conflict.vo.NodeAdapter;
 
@@ -41,7 +41,7 @@ public class DepJars {
 				return dep;
 			}
 		}
-		UtilGetter.i().getLog().warn("cant find dep:" + groupId + "-" + artifactId + "-" + version + "-" + classifier);
+		MavenUtil.i().getLog().warn("cant find dep:" + groupId + "-" + artifactId + "-" + version + "-" + classifier);
 		return null;
 	}
 

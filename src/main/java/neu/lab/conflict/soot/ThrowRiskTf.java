@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import neu.lab.conflict.util.UtilGetter;
+import neu.lab.conflict.util.MavenUtil;
 import neu.lab.conflict.vo.MethodCall;
 import neu.lab.conflict.vo.risk.NodeRiskAna;
 import soot.MethodOrMethodContext;
@@ -43,10 +43,10 @@ public abstract class ThrowRiskTf extends SceneTransformer {
 		this.thrownMthds = thrownMthds;
 
 		entryClses = getJarCls(sootAnaUnit.getTopJar().getFilePath());
-		UtilGetter.i().getLog().info("entryClses size:" + entryClses.size());
+		MavenUtil.i().getLog().info("entryClses size:" + entryClses.size());
 
 		riskJarClses = getJarCls(sootAnaUnit.getBottomJar().getFilePath());
-		UtilGetter.i().getLog().info("riskJarClses size:" + riskJarClses.size());
+		MavenUtil.i().getLog().info("riskJarClses size:" + riskJarClses.size());
 	}
 
 	@Override
@@ -94,11 +94,12 @@ public abstract class ThrowRiskTf extends SceneTransformer {
 
 	protected abstract boolean isRiskCall(Edge edge);
 
-	private Set<String> getJarCls(String jarPath) {
+	private Set<String> getJarCls(List<String> jarPaths) {
 		Set<String> jarClses = new HashSet<String>();
-
-		for (String cls : SourceLocator.v().getClassesUnder(jarPath)) {
-			jarClses.add(cls);
+		for (String jarPath : jarPaths) {
+			for (String cls : SourceLocator.v().getClassesUnder(jarPath)) {
+				jarClses.add(cls);
+			}
 		}
 		return jarClses;
 	}

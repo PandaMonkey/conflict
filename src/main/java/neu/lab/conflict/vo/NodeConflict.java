@@ -3,7 +3,7 @@ package neu.lab.conflict.vo;
 import java.util.HashSet;
 import java.util.Set;
 
-import neu.lab.conflict.util.UtilGetter;
+import neu.lab.conflict.util.MavenUtil;
 import neu.lab.conflict.vo.risk.ConflictRiskAna;
 
 /**
@@ -32,7 +32,7 @@ public class NodeConflict {
 			for (DepJar depJar : depJars) {
 				if (depJar.isSelected()) {
 					if (null != usedDepJar)
-						UtilGetter.i().getLog()
+						MavenUtil.i().getLog()
 								.warn("duplicate used version for dependency:" + groupId + ":" + artifactId);
 					usedDepJar = depJar;
 				}
@@ -83,7 +83,7 @@ public class NodeConflict {
 		for (DepJar depJar : depJars) {
 			str = str + depJar.getVersion() + ":" + depJar.getClassifier() + "-";
 		}
-		str = str + "-->used jar:" + getUsedDepJar().getVersion();
+		str = str + "-->used jar:" + getUsedDepJar().getVersion()+":"+getUsedDepJar().getClassifier();
 		return str;
 	}
 }

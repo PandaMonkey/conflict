@@ -1,12 +1,14 @@
 package neu.lab.conflict.vo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
 import org.apache.maven.artifact.resolver.ArtifactResolutionException;
 import org.apache.maven.shared.dependency.tree.DependencyNode;
 
-import neu.lab.conflict.container.NodeAdapters;
-import neu.lab.conflict.util.UtilGetter;
+import neu.lab.conflict.util.MavenUtil;
 
 /**
  * some depjar may be from dependency management instead of dependency tree.We
@@ -77,28 +79,30 @@ public class ManageNodeAdapter extends NodeAdapter {
 		return false;
 	}
 
-	public String getFilePath() {
-		if (filePath == null) {
+	public List<String> getFilePath() {
+		if (filePaths == null) {
+			filePaths = new ArrayList<String>();
 			if (isInnerProject()) {// inner project is target/classes
-				filePath = UtilGetter.i().getMavenProject(this).getBuild().getOutputDirectory();
+//				 filePaths = UtilGetter.i().getSrcPaths();
+				filePaths.add(MavenUtil.i().getMavenProject(this).getBuild().getOutputDirectory());
 			} else {// dependency is repository address
 				try {
-					Artifact artifact = UtilGetter.i().getArtifact(getGroupId(), getArtifactId(), getVersion(),
+					Artifact artifact = MavenUtil.i().getArtifact(getGroupId(), getArtifactId(), getVersion(),
 							getType(), getClassifier(), getScope());
 					if (!artifact.isResolved())
-						UtilGetter.i().resolve(artifact);
-					filePath = artifact.getFile().getAbsolutePath();
+						MavenUtil.i().resolve(artifact);
+					String path = artifact.getFile().getAbsolutePath();
+					MavenUtil.i().getLog().warn(path);
+					filePaths.add(path);
 				} catch (ArtifactResolutionException e) {
-					UtilGetter.i().getLog().warn("cant resolve " + this.toString());
-					filePath = "";
+					MavenUtil.i().getLog().warn("cant resolve " + this.toString());
 				} catch (ArtifactNotFoundException e) {
-					UtilGetter.i().getLog().warn("cant resolve " + this.toString());
-					filePath = "";
+					MavenUtil.i().getLog().warn("cant resolve " + this.toString());
 				}
 			}
 		}
-		UtilGetter.i().getLog().debug("node filepath for " + toString() + " : " + filePath);
-		return filePath;
+		MavenUtil.i().getLog().debug("node filepath for " + toString() + " : " + filePaths);
+		return filePaths;
 	}
 
 	public boolean isSelf(DependencyNode node2) {

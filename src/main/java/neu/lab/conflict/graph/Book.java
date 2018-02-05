@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import neu.lab.conflict.Conf;
+
 public class Book {
 	protected Node node;
 	private Set<Path> paths;
@@ -50,7 +52,7 @@ public class Book {
 	public List<Path> getRiskPath() {
 		List<Path> riskPaths = new ArrayList<Path>();
 		for (Path path : getPaths()) {
-			if (path.isFromHost() && path.getPathLen() > 2)
+			if (path.isFromHost() && path.getPathLen() >= Conf.MIN_PATH_DEP)//path whose depth is 2 is unreasonable.
 				riskPaths.add(path);
 		}
 		return riskPaths;

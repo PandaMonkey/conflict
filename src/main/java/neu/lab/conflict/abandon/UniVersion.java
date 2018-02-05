@@ -1,4 +1,4 @@
-package neu.lab.conflict;
+package neu.lab.conflict.abandon;
 
 public class UniVersion {
 	private String version;

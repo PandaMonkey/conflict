@@ -9,7 +9,7 @@ import java.util.Set;
 
 import neu.lab.conflict.Conf;
 import neu.lab.conflict.graph.filter.FilterInvoker;
-import neu.lab.conflict.util.UtilGetter;
+import neu.lab.conflict.util.MavenUtil;
 import neu.lab.conflict.vo.MethodCall;
 
 public class Graph {
@@ -24,7 +24,7 @@ public class Graph {
 		// TODO garbage relation can filter ;
 		// no in-method(except in host) or no out-method(except in conflict) should
 		// filter
-		UtilGetter.i().getLog().info("graph-before-filter nodes size:" + nodes.size() + " calls size:" + calls.size());
+		MavenUtil.i().getLog().info("graph-before-filter nodes size:" + nodes.size() + " calls size:" + calls.size());
 		if (Conf.FLT_CALL)
 			filtCalls(calls);
 		name2node = new HashMap<String, Node>();
@@ -39,7 +39,7 @@ public class Graph {
 		}
 		if (Conf.FLT_NODE)
 			filterNode(risk2mthds);
-		UtilGetter.i().getLog()
+		MavenUtil.i().getLog()
 				.info("graph-after-filter nodes size:" + name2node.size() + " calls size:" + calls.size());
 		Dog dog = new Dog(this);
 		books = dog.findRlt(risk2mthds);

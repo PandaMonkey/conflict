@@ -1,6 +1,8 @@
 package neu.lab.conflict.vo;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.resolver.ArtifactNotFoundException;
@@ -11,7 +13,7 @@ import org.apache.maven.shared.dependency.tree.DependencyNode;
 import neu.lab.conflict.container.DepJars;
 import neu.lab.conflict.container.NodeAdapters;
 import neu.lab.conflict.util.ClassifierUtil;
-import neu.lab.conflict.util.UtilGetter;
+import neu.lab.conflict.util.MavenUtil;
 import neu.lab.conflict.vo.risk.JarRiskAna;
 import neu.lab.conflict.vo.risk.NodeRiskAna;
 
@@ -21,7 +23,7 @@ import neu.lab.conflict.vo.risk.NodeRiskAna;
 public class NodeAdapter {
 	protected DependencyNode node;
 	protected DepJar depJar;
-	protected String filePath;
+	protected List<String> filePaths;
 	protected NodeRiskAna nodeRiskAna;
 
 	public NodeAdapter(DependencyNode node) {
@@ -109,41 +111,42 @@ public class NodeAdapter {
 		return NodeAdapters.i().getNodeAdapter(node.getParent());
 	}
 
-	public String getFilePath() {
-		if (filePath == null) {
+	public List<String> getFilePath() {
+		if (filePaths == null) {
+			filePaths = new ArrayList<String>();
 			if (isInnerProject()) {// inner project is target/classes
-				filePath = UtilGetter.i().getMavenProject(this).getBuild().getOutputDirectory();
+				filePaths.add(MavenUtil.i().getMavenProject(this).getBuild().getOutputDirectory());
+//				filePaths = UtilGetter.i().getSrcPaths();
 			} else {// dependency is repository address
+				
 				try {
 					if (null == node.getPremanagedVersion()) {
 						// artifact version of node is the version declared in pom.
 						if (!node.getArtifact().isResolved())
-							UtilGetter.i().resolve(node.getArtifact());
-						filePath = node.getArtifact().getFile().getAbsolutePath();
+							MavenUtil.i().resolve(node.getArtifact());
+						filePaths.add(node.getArtifact().getFile().getAbsolutePath());
 					} else {
-						Artifact artifact = UtilGetter.i().getArtifact(getGroupId(), getArtifactId(), getVersion(),
+						Artifact artifact = MavenUtil.i().getArtifact(getGroupId(), getArtifactId(), getVersion(),
 								getType(), getClassifier(), getScope());
 						if (!artifact.isResolved())
-							UtilGetter.i().resolve(artifact);
-						filePath = artifact.getFile().getAbsolutePath();
+							MavenUtil.i().resolve(artifact);
+						filePaths.add(artifact.getFile().getAbsolutePath());
 					}
 				} catch (ArtifactResolutionException e) {
-					UtilGetter.i().getLog().warn("cant resolve " + this.toString());
-					filePath = "";
+					MavenUtil.i().getLog().warn("cant resolve " + this.toString());
 				} catch (ArtifactNotFoundException e) {
-					UtilGetter.i().getLog().warn("cant resolve " + this.toString());
-					filePath = "";
+					MavenUtil.i().getLog().warn("cant resolve " + this.toString());
 				}
 
 			}
 		}
-		UtilGetter.i().getLog().debug("node filepath for " + toString() + " : " + filePath);
-		return filePath;
+		MavenUtil.i().getLog().debug("node filepath for " + toString() + " : " + filePaths);
+		return filePaths;
 
 	}
 
 	public boolean isInnerProject() {
-		return UtilGetter.i().isInner(this);
+		return MavenUtil.i().isInner(this);
 	}
 
 	public boolean isSelf(DependencyNode node2) {
@@ -161,7 +164,7 @@ public class NodeAdapter {
 	}
 
 	public MavenProject getSelfMavenProject() {
-		return UtilGetter.i().getMavenProject(this);
+		return MavenUtil.i().getMavenProject(this);
 	}
 
 	public DepJar getDepJar() {
@@ -173,5 +176,15 @@ public class NodeAdapter {
 	@Override
 	public String toString() {
 		return getGroupId() + ":" + getArtifactId() + ":" + getVersion() + ":" + getClassifier();
+	}
+
+	public String getWholePath() {
+		StringBuilder sb = new StringBuilder(toString());
+		NodeAdapter father = getParent();
+		while (null != father) {
+			sb.insert(0, father.toString() + "->");
+			father = father.getParent();
+		}
+		return sb.toString();
 	}
 }

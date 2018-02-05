@@ -7,7 +7,7 @@ import java.util.Set;
 
 import neu.lab.conflict.soot.SootAna;
 import neu.lab.conflict.soot.ThrowRiskTf;
-import neu.lab.conflict.util.UtilGetter;
+import neu.lab.conflict.util.MavenUtil;
 import neu.lab.conflict.vo.MethodCall;
 import neu.lab.conflict.vo.risk.NodeRiskAna;
 import soot.PackManager;
@@ -22,7 +22,7 @@ public class RiskCallAna extends SootAna {
 	}
 
 	public Set<MethodCall> getRiskCalls(NodeRiskAna sootAnaUnit,ThrowRiskTf transformer) {
-		UtilGetter.i().getLog().info("use soot to compute risk call for " + sootAnaUnit.toString());
+		MavenUtil.i().getLog().info("use soot to compute risk call for " + sootAnaUnit.toString());
 
 		long startTime = System.currentTimeMillis();
 

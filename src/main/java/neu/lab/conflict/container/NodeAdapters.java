@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.apache.maven.shared.dependency.tree.DependencyNode;
 
-import neu.lab.conflict.util.UtilGetter;
+import neu.lab.conflict.util.MavenUtil;
 import neu.lab.conflict.visitor.NodeAdapterCollector;
 import neu.lab.conflict.vo.DepJar;
 import neu.lab.conflict.vo.ManageNodeAdapter;
@@ -79,7 +79,7 @@ public class NodeAdapters {
 			if (nodeAdapter.isSelf(node))
 				return nodeAdapter;
 		}
-		UtilGetter.i().getLog().warn("cant find nodeAdapter for node:" + node.toNodeString());
+		MavenUtil.i().getLog().warn("cant find nodeAdapter for node:" + node.toNodeString());
 		return null;
 	}
 
@@ -88,7 +88,7 @@ public class NodeAdapters {
 			if (nodeAdapter.isSelf(groupId2, artifactId2, version2, classifier2))
 				return nodeAdapter;
 		}
-		UtilGetter.i().getLog().warn("cant find nodeAdapter for management node:" + groupId2 + ":" + artifactId2 + ":"
+		MavenUtil.i().getLog().warn("cant find nodeAdapter for management node:" + groupId2 + ":" + artifactId2 + ":"
 				+ version2 + ":" + classifier2);
 		return null;
 	}
@@ -101,7 +101,7 @@ public class NodeAdapters {
 			}
 		}
 		if (result.size() == 0)
-			UtilGetter.i().getLog().warn("cant find nodeAdapter for depJar:" + depJar.toString());
+			MavenUtil.i().getLog().warn("cant find nodeAdapter for depJar:" + depJar.toString());
 		return result;
 	}
 

@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import neu.lab.conflict.Conf;
-import neu.lab.conflict.util.UtilGetter;
+import neu.lab.conflict.util.MavenUtil;
 
 /**
  * 不断进行深度优先遍历，获取想要获得的信息
@@ -56,7 +56,7 @@ public class Dog {
 			}
 		}
 		long runtime = (System.currentTimeMillis() - start) / 1000;
-		UtilGetter.i().getLog().info("dog run time:" + runtime);
+		MavenUtil.i().getLog().info("dog run time:" + runtime);
 		return this.books;
 	}
 

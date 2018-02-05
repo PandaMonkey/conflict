@@ -13,7 +13,7 @@ import neu.lab.conflict.Conf;
 import neu.lab.conflict.graph.Graph;
 import neu.lab.conflict.graph.Node;
 import neu.lab.conflict.util.SootUtil;
-import neu.lab.conflict.util.UtilGetter;
+import neu.lab.conflict.util.MavenUtil;
 import neu.lab.conflict.vo.MethodCall;
 import neu.lab.conflict.vo.risk.NodeRiskAna;
 import soot.MethodOrMethodContext;
@@ -42,7 +42,7 @@ public class CgAna extends SootAna {
 	}
 
 	public void cmpCg(NodeRiskAna nodeAnaUnit, Set<String> thrownMthds) {
-		UtilGetter.i().getLog().info("use soot to compute reach methods for " + nodeAnaUnit.toString());
+		MavenUtil.i().getLog().info("use soot to compute reach methods for " + nodeAnaUnit.toString());
 
 		long startTime = System.currentTimeMillis();
 		CgTf transformer = new CgTf(nodeAnaUnit, thrownMthds);
@@ -95,7 +95,7 @@ class CgTf extends SceneTransformer {
 		entryClses = getJarCls(sootAnaUnit.getTopJar().getFilePath());
 
 		conflictJarClses = getJarCls(sootAnaUnit.getBottomJar().getFilePath());
-		UtilGetter.i().getLog()
+		MavenUtil.i().getLog()
 				.info("entryClses size:" + entryClses.size() + " dupClses size:" + conflictJarClses.size());
 	}
 
@@ -127,7 +127,7 @@ class CgTf extends SceneTransformer {
 			}
 
 		}
-		UtilGetter.i().getLog().info("soot reachMethod size:" + Scene.v().getReachableMethods().size()
+		MavenUtil.i().getLog().info("soot reachMethod size:" + Scene.v().getReachableMethods().size()
 				+ ";reachedMethod in jar size:" + rchMthds.size());
 
 		CallGraph cg = Scene.v().getCallGraph();
@@ -195,11 +195,12 @@ class CgTf extends SceneTransformer {
 		return false;
 	}
 
-	private Set<String> getJarCls(String jarPath) {
+	private Set<String> getJarCls(List<String> jarPaths) {
 		Set<String> jarClses = new HashSet<String>();
-
-		for (String cls : SourceLocator.v().getClassesUnder(jarPath)) {
-			jarClses.add(cls);
+		for (String jarPath : jarPaths) {
+			for (String cls : SourceLocator.v().getClassesUnder(jarPath)) {
+				jarClses.add(cls);
+			}
 		}
 		return jarClses;
 	}

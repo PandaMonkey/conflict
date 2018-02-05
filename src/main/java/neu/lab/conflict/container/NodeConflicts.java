@@ -6,7 +6,6 @@ import java.util.List;
 
 import neu.lab.conflict.vo.NodeAdapter;
 import neu.lab.conflict.vo.NodeConflict;
-import neu.lab.conflict.vo.risk.NodeRiskAna;
 
 public class NodeConflicts {
 	private static NodeConflicts instance;

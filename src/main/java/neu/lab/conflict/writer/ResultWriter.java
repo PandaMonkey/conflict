@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import neu.lab.conflict.util.UtilGetter;
+import neu.lab.conflict.util.MavenUtil;
 import neu.lab.conflict.vo.DepJar;
 import neu.lab.conflict.vo.NodeConflict;
 
@@ -18,46 +18,47 @@ public class ResultWriter {
 	public ResultWriter() {
 		try {
 			String outPath = "d://conflict.txt";
-//			File out = new File(outPath);
-//			if (out.exists())
-//				out.delete();
+			// File out = new File(outPath);
+			// if (out.exists())
+			// out.delete();
 			printer = new PrintStream(new FileOutputStream(new File(outPath), true));
 		} catch (FileNotFoundException e) {
-			UtilGetter.i().getLog().error("cant open risk result file!", e);
+			MavenUtil.i().getLog().error("cant open risk result file!", e);
 		}
 	}
 
 	public void writeConflicts(List<NodeConflict> conflicts) {
-		printer.println("==============="+UtilGetter.i().getBuildDir().getAbsolutePath());
-		if(conflicts.size()==0) {
+		printer.println("===============" + MavenUtil.i().getBuildDir().getAbsolutePath());
+		if (conflicts.size() == 0) {
 			printer.println("NO_CONFLICT");
 		}
 		for (NodeConflict conflict : conflicts) {
+			// if (conflict.sameArtifact("org.apache.avro", "avro"))
 			printer.println(conflict.getRiskAna().getRiskString());
-//			writeConflict(conflict);
+			// writeConflict(conflict);
 		}
 
 		printer.close();
 	}
 
 	private void writeConflict(NodeConflict conflict) {
-//		printer.println(conflict.toString());
-//
-//		Set<String> rchMthds = conflict.getRchedMthds();
-//
-//		DepJar usedJar = conflict.getUsedDepJar();
-//		writeJarRch(rchMthds, usedJar);
-//		for (DepJar depJar : conflict.getDepJars()) {
-//			if (depJar != usedJar) {
-//				writeJarRch(rchMthds, depJar);
-//			}
-//		}
-//		printer.println("\n");
-//
-//		for (JarRiskAna jarRisk : conflict.getJarRiskAnas()) {
-////			printer.println(jarRisk.getRiskStr());
-//			printer.println();
-//		}
+		// printer.println(conflict.toString());
+		//
+		// Set<String> rchMthds = conflict.getRchedMthds();
+		//
+		// DepJar usedJar = conflict.getUsedDepJar();
+		// writeJarRch(rchMthds, usedJar);
+		// for (DepJar depJar : conflict.getDepJars()) {
+		// if (depJar != usedJar) {
+		// writeJarRch(rchMthds, depJar);
+		// }
+		// }
+		// printer.println("\n");
+		//
+		// for (JarRiskAna jarRisk : conflict.getJarRiskAnas()) {
+		//// printer.println(jarRisk.getRiskStr());
+		// printer.println();
+		// }
 	}
 
 	private void writeJarRch(Set<String> rchMthds, DepJar depJar) {

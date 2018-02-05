@@ -1,16 +1,12 @@
 package neu.lab.conflict.soot;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import neu.lab.conflict.util.DetectUtil;
 import neu.lab.conflict.util.SootUtil;
-import neu.lab.conflict.util.UtilGetter;
+import neu.lab.conflict.util.MavenUtil;
 import neu.lab.conflict.vo.ClassVO;
 import neu.lab.conflict.vo.MethodVO;
 import soot.PackManager;
@@ -32,23 +28,19 @@ public class JarAna extends SootAna {
 		return instance;
 	}
 
-	public Map<String,ClassVO> deconstruct(String jarFilePath) {
-		UtilGetter.i().getLog().info("use soot to deconstruct " + jarFilePath);
+	public Map<String, ClassVO> deconstruct(List<String> jarFilePath) {
+		MavenUtil.i().getLog().info("use soot to deconstruct " + jarFilePath);
 
 		long startTime = System.currentTimeMillis();
 
-		Map<String,ClassVO> clses = new HashMap<String,ClassVO>();
-		if (!new File(jarFilePath).exists()) {
-			UtilGetter.i().getLog().warn(jarFilePath + " doesnt exist!");
-			return clses;
-		}
+		Map<String, ClassVO> clses = new HashMap<String, ClassVO>();
 
 		PackManager.v().getPack("wjtp").add(new Transform("wjtp.myTrans", new DsTransformer(clses)));
 		SootUtil.modifyLogOut();
 		try {
-			soot.Main.main(getArgs(new String[] { jarFilePath }).toArray(new String[0]));// 解析系统中存在的node以及node之间的关系
+			soot.Main.main(getArgs(jarFilePath.toArray(new String[0])).toArray(new String[0]));// 解析系统中存在的node以及node之间的关系
 		} catch (IllegalArgumentException e) {
-			UtilGetter.i().getLog().error("cant deconstruct " + jarFilePath,e);
+			MavenUtil.i().getLog().error("cant deconstruct " + jarFilePath, e);
 		}
 
 		soot.G.reset();
@@ -64,9 +56,9 @@ public class JarAna extends SootAna {
 }
 
 class DsTransformer extends SceneTransformer {
-	private Map<String,ClassVO> clses;
+	private Map<String, ClassVO> clses;
 
-	public DsTransformer(Map<String,ClassVO> clses) {
+	public DsTransformer(Map<String, ClassVO> clses) {
 		this.clses = clses;
 	}
 
