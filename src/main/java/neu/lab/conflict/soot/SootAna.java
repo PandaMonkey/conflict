@@ -28,11 +28,11 @@ public abstract class SootAna {
 
 	protected void addGenArg(List<String> argsList) {
 
-		// argsList.add("-pp");// 将soot的classPath中的类用于解析
-		argsList.add("-ire");// 忽略classPath中的无效实体
-		argsList.add("-app");// 所有的类都将作为appClass
-		argsList.add("-allow-phantom-refs");// 允许无效的类型解析
-		argsList.add("-w");// 整个项目解析
+
+		argsList.add("-ire");
+		argsList.add("-app");
+		argsList.add("-allow-phantom-refs");
+		argsList.add("-w");
 
 		
 	}
@@ -45,6 +45,6 @@ public abstract class SootAna {
 		argsList.addAll(Arrays.asList(new String[] { "-p", "jap", "off", }));
 		argsList.addAll(Arrays.asList(new String[] { "-p", "bb", "off", }));
 		argsList.addAll(Arrays.asList(new String[] { "-p", "tag", "off", }));
-		argsList.addAll(Arrays.asList(new String[] { "-f", "n", }));// 关闭文件的输出
+		argsList.addAll(Arrays.asList(new String[] { "-f", "n", }));
 	}
 }

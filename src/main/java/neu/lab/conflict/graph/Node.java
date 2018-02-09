@@ -56,16 +56,11 @@ public class Node {
 		}
 		return false;
 	}
-	/**
-	 * 计算outMthds中每个函数名字出现的次数
-	 * 
-	 * @param outMthds
-	 * @return <k,v> k:函数名字 v:出现的次数
-	 */
+
 	public Map<String, Integer> calNameCnt() {
 		Map<String, Integer> result = new HashMap<String, Integer>();
 		if (outNds != null) {
-			// 对每一个方法进行计数
+
 			for (String mthdSig : outNds) {
 				String mthdName = SootUtil.mthdSig2Name(mthdSig);
 				Integer cnt = result.get(mthdName);

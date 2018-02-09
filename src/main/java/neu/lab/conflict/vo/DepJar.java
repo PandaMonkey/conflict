@@ -12,7 +12,6 @@ import neu.lab.conflict.util.MavenUtil;
 import neu.lab.conflict.vo.risk.JarRiskAna;
 
 /**
- * 对应一个jar文件，跟node是一对多的关系，因为多个节点可能对应一个jar文件
  * 
  * @author asus
  *

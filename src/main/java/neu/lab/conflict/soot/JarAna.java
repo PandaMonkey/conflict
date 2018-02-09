@@ -38,7 +38,7 @@ public class JarAna extends SootAna {
 		PackManager.v().getPack("wjtp").add(new Transform("wjtp.myTrans", new DsTransformer(clses)));
 		SootUtil.modifyLogOut();
 		try {
-			soot.Main.main(getArgs(jarFilePath.toArray(new String[0])).toArray(new String[0]));// 解析系统中存在的node以及node之间的关系
+			soot.Main.main(getArgs(jarFilePath.toArray(new String[0])).toArray(new String[0]));
 		} catch (IllegalArgumentException e) {
 			MavenUtil.i().getLog().error("cant deconstruct " + jarFilePath, e);
 		}

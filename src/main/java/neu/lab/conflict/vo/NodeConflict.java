@@ -6,12 +6,7 @@ import java.util.Set;
 import neu.lab.conflict.util.MavenUtil;
 import neu.lab.conflict.vo.risk.ConflictRiskAna;
 
-/**
- * 冲突的节点形成的组
- * 
- * @author asus
- *
- */
+
 public class NodeConflict {
 	private String groupId;
 	private String artifactId;
@@ -60,11 +55,7 @@ public class NodeConflict {
 		return depJars;
 	}
 
-	/**
-	 * 判断该对象是否真的为冲突；包含多个版本的node
-	 * 
-	 * @return
-	 */
+
 	public boolean isConflict() {
 		return getDepJars().size() > 1;
 	}

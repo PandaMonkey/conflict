@@ -16,7 +16,6 @@ public class Book {
 		paths = new HashSet<Path>();
 	}
 
-	// 将子级node的手册copy到自己的手册中
 	public void addChild(Book childBook) {
 		Set<Path> childRecords = childBook.getPaths();
 		for (Path path : childRecords) {
@@ -24,24 +23,21 @@ public class Book {
 		}
 	}
 
-	// 在手册完成时，将自己的节点信息加入到手册
 	public void addSelf() {
-		if (paths.isEmpty()) {// 该节点没有任何的调用
+		if (paths.isEmpty()) {
 			Path path = new Path(node.getName(), node.isHostNode(), 1);
 			paths.add(path);
-		} else {// 该节点有调用，将自己的jar包添加到每一条调用路径的最前面
+		} else {
 			addNdToAll(node.getName());
 		}
 	}
 
-	// 为book的每条record添加node;
 	public void addNdToAll(String node) {
 		for (Path path : paths) {
 			path.addTail(node);
 		}
 	}
 
-	// 得到book中的每条记录
 	public Set<Path> getPaths() {
 		return paths;
 	}
@@ -58,7 +54,6 @@ public class Book {
 		return riskPaths;
 	}
 
-	// //得到book中的每条记录
 	// public void copy(Book book) {
 	//
 	// }

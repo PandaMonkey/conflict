@@ -18,7 +18,6 @@ import neu.lab.conflict.vo.risk.JarRiskAna;
 import neu.lab.conflict.vo.risk.NodeRiskAna;
 
 /**
- * @author asus 提供未被版本管理之前的依赖树的节点信息:包括version和jarfilePath
  */
 public class NodeAdapter {
 	protected DependencyNode node;

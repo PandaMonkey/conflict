@@ -13,7 +13,7 @@ public class NodeDups {
 
 	public NodeDups(NodeAdapters nodeAdapters) {
 		container = new ArrayList<NodeDup>();
-		for (NodeAdapter node : nodeAdapters.getAllNodeAdapter()) {// 将所有节点分组
+		for (NodeAdapter node : nodeAdapters.getAllNodeAdapter()) {
 			addNodeDup(node);
 		}
 		Iterator<NodeDup> ite = container.iterator();

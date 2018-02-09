@@ -11,9 +11,7 @@ import neu.lab.conflict.graph.Book;
 import neu.lab.conflict.graph.Path;
 import neu.lab.conflict.vo.NodeAdapter;
 
-/**
- * @author asus soot进行cg运算的单元
- */
+
 public class NodeRiskAna {
 	private LinkedList<NodeAdapter> jarPath;// there is order(from down to up)
 	// private JarRiskAna jarRiskAna;

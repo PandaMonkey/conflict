@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ClassVO {
-	private String clsSig;// cls的唯一标示
+	private String clsSig;
 	private Set<MethodVO> mthds;// methods in class
 	private DepJar depJar;
 

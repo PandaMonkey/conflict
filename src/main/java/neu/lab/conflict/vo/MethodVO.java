@@ -5,7 +5,7 @@ import java.util.Set;
 
 
 public class MethodVO {
-	private String mthdSig;//方法的唯一标示
+	private String mthdSig;
 	private Set<String> inMthds;
 	private ClassVO cls;
 

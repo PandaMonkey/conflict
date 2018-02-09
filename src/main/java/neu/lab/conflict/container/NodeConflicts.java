@@ -27,7 +27,7 @@ public class NodeConflicts {
 	 */
 	private NodeConflicts(NodeAdapters nodeAdapters) {
 		container = new ArrayList<NodeConflict>();
-		for (NodeAdapter node : nodeAdapters.getAllNodeAdapter()) {// 将所有节点分组
+		for (NodeAdapter node : nodeAdapters.getAllNodeAdapter()) {
 			addNodeAdapter(node);
 		}
 		
@@ -47,7 +47,7 @@ public class NodeConflicts {
 	private void addNodeAdapter(NodeAdapter nodeAdapter) {
 		NodeConflict conflict = null;
 		for (NodeConflict existConflict : container) {
-			if (existConflict.sameArtifact(nodeAdapter.getGroupId(), nodeAdapter.getArtifactId())) {// 与以存在的冲突
+			if (existConflict.sameArtifact(nodeAdapter.getGroupId(), nodeAdapter.getArtifactId())) {
 				conflict = existConflict;
 			}
 		}
