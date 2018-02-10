@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import neu.lab.conflict.container.DepJars;
+import neu.lab.conflict.util.SootUtil;
 import neu.lab.conflict.vo.DepJar;
 import soot.SourceLocator;
 
@@ -15,7 +16,7 @@ public class ClassDups {
 		container = new ArrayList<ClassDup>();
 		for (DepJar depJar : depJars.getAllDepJar()) {
 			if (depJar.isSelected()) {
-				List<String> allCls = getJarClass(depJar);
+				List<String> allCls = SootUtil.getJarClasses(depJar);
 				for (String cls : allCls) {
 					addCls(cls, depJar);
 				}
@@ -47,11 +48,5 @@ public class ClassDups {
 		clsDup.addDepJar(depJar);
 	}
 
-	public List<String> getJarClass(DepJar depJar) {
-		List<String> allCls = new ArrayList<String>();
-		for (String classPath : depJar.getClassPath()) {
-			allCls.addAll(SourceLocator.v().getClassesUnder(classPath));
-		}
-		return allCls;
-	}
+
 }

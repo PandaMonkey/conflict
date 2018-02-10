@@ -27,6 +27,27 @@ public class NodeAdapter {
 
 	public NodeAdapter(DependencyNode node) {
 		this.node = node;
+		if (node != null)
+			resolve();
+	}
+
+	private void resolve() {
+		try {
+			if (null == node.getPremanagedVersion()) {
+				// artifact version of node is the version declared in pom.
+				if (!node.getArtifact().isResolved())
+					MavenUtil.i().resolve(node.getArtifact());
+			} else {
+				Artifact artifact = MavenUtil.i().getArtifact(getGroupId(), getArtifactId(), getVersion(), getType(),
+						getClassifier(), getScope());
+				if (!artifact.isResolved())
+					MavenUtil.i().resolve(artifact);
+			}
+		} catch (ArtifactResolutionException e) {
+			MavenUtil.i().getLog().warn("cant resolve " + this.toString());
+		} catch (ArtifactNotFoundException e) {
+			MavenUtil.i().getLog().warn("cant resolve " + this.toString());
+		}
 	}
 
 	public String getGroupId() {
@@ -115,14 +136,11 @@ public class NodeAdapter {
 			filePaths = new ArrayList<String>();
 			if (isInnerProject()) {// inner project is target/classes
 				filePaths.add(MavenUtil.i().getMavenProject(this).getBuild().getOutputDirectory());
-//				filePaths = UtilGetter.i().getSrcPaths();
+				// filePaths = UtilGetter.i().getSrcPaths();
 			} else {// dependency is repository address
-				
+
 				try {
 					if (null == node.getPremanagedVersion()) {
-						// artifact version of node is the version declared in pom.
-						if (!node.getArtifact().isResolved())
-							MavenUtil.i().resolve(node.getArtifact());
 						filePaths.add(node.getArtifact().getFile().getAbsolutePath());
 					} else {
 						Artifact artifact = MavenUtil.i().getArtifact(getGroupId(), getArtifactId(), getVersion(),

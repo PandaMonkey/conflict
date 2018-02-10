@@ -16,6 +16,9 @@ public class Conf {
 	public static final boolean PRINT_CONFUSED_METHOD = false;
 	public static final int MIN_PATH_DEP = 3;
 	public static final int PATH_DEP = 15;
+	public static String outDir = "D:\\ws\\sta\\";
+	
+//	public static final String outSir = "D:\\ws\\sta\\";
 }
 
 //public class Conf {

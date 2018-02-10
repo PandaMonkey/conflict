@@ -3,6 +3,11 @@ package neu.lab.conflict.util;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import neu.lab.conflict.vo.DepJar;
+import soot.SourceLocator;
 
 public class SootUtil {
 	public static void modifyLogOut() {
@@ -25,5 +30,19 @@ public class SootUtil {
 	 */
 	public static String mthdSig2Name(String mthdSig) {
 		return mthdSig.substring(mthdSig.indexOf(":") + 1, mthdSig.indexOf(")") + 1);
+	}
+
+	public static List<String> getJarClasses(DepJar depJar) {
+		return getJarClasses(depJar.getClassPath());
+	}
+
+	public static List<String> getJarClasses(List<String> paths) {
+		List<String> allCls = new ArrayList<String>();
+		for (String classPath : paths) {
+			if (!classPath.endsWith("tar.gz")) {
+				allCls.addAll(SourceLocator.v().getClassesUnder(classPath));
+			}
+		}
+		return allCls;
 	}
 }

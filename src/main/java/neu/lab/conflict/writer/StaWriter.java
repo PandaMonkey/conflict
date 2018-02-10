@@ -1,18 +1,22 @@
-package neu.lab.conflict.statics;
+package neu.lab.conflict.writer;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 
+import neu.lab.conflict.Conf;
 import neu.lab.conflict.container.DepJars;
 import neu.lab.conflict.container.NodeAdapters;
 import neu.lab.conflict.container.NodeConflicts;
+import neu.lab.conflict.statics.ClassDup;
+import neu.lab.conflict.statics.ClassDups;
+import neu.lab.conflict.statics.NodeDup;
+import neu.lab.conflict.statics.NodeDups;
 import neu.lab.conflict.util.MavenUtil;
 import neu.lab.conflict.vo.NodeConflict;
 
 public class StaWriter {
-	public static String baseDir = "D:\\ws\\sta\\";
 	private NodeConflicts nodeConflicts;
 	private NodeDups nodeDups;
 	private ClassDups classDups;
@@ -31,7 +35,7 @@ public class StaWriter {
 	public void writeDetail() {
 		try {
 			PrintWriter printer = new PrintWriter(
-					new BufferedWriter(new FileWriter(new File(baseDir + "detail.txt"), true)));
+					new BufferedWriter(new FileWriter(new File(Conf.outDir + "detail.txt"), true)));
 			printer.println("===============projectPath->" + MavenUtil.i().getProjectInfo());
 			if (nodeConflicts.getConflicts().size() > 0) {
 				printer.print("+confJar  ");
@@ -84,7 +88,7 @@ public class StaWriter {
 	private void writeLevel(String outName) {
 		try {
 			PrintWriter printer = new PrintWriter(
-					new BufferedWriter(new FileWriter(new File(baseDir + outName), true)));
+					new BufferedWriter(new FileWriter(new File(Conf.outDir + outName), true)));
 			printer.println(MavenUtil.i().getProjectInfo());
 			printer.close();
 

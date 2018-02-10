@@ -9,7 +9,6 @@ import neu.lab.conflict.container.NodeConflicts;
 import neu.lab.conflict.soot.CgAna;
 import neu.lab.conflict.soot.JarAna;
 import neu.lab.conflict.vo.NodeConflict;
-import neu.lab.conflict.writer.ResultWriter;
 
 /**
  * Goal which touches a timestamp file.

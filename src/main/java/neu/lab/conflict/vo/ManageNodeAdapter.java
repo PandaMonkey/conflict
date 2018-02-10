@@ -24,6 +24,7 @@ public class ManageNodeAdapter extends NodeAdapter {
 	private String classifier;
 	private String type;
 	private String scope;
+	private Artifact artifact;
 
 	public ManageNodeAdapter(NodeAdapter nodeAdapter) {
 		super(null);
@@ -33,6 +34,18 @@ public class ManageNodeAdapter extends NodeAdapter {
 		classifier = nodeAdapter.getClassifier();
 		type = nodeAdapter.getType();
 		scope = nodeAdapter.getScope();
+
+		try {
+			artifact = MavenUtil.i().getArtifact(getGroupId(), getArtifactId(), getVersion(), getType(),
+					getClassifier(), getScope());
+			if (!artifact.isResolved())
+				MavenUtil.i().resolve(artifact);
+
+		} catch (ArtifactResolutionException e) {
+			MavenUtil.i().getLog().warn("cant resolve " + this.toString());
+		} catch (ArtifactNotFoundException e) {
+			MavenUtil.i().getLog().warn("cant resolve " + this.toString());
+		}
 	}
 
 	public String getGroupId() {
@@ -83,22 +96,13 @@ public class ManageNodeAdapter extends NodeAdapter {
 		if (filePaths == null) {
 			filePaths = new ArrayList<String>();
 			if (isInnerProject()) {// inner project is target/classes
-//				 filePaths = UtilGetter.i().getSrcPaths();
+				// filePaths = UtilGetter.i().getSrcPaths();
 				filePaths.add(MavenUtil.i().getMavenProject(this).getBuild().getOutputDirectory());
 			} else {// dependency is repository address
-				try {
-					Artifact artifact = MavenUtil.i().getArtifact(getGroupId(), getArtifactId(), getVersion(),
-							getType(), getClassifier(), getScope());
-					if (!artifact.isResolved())
-						MavenUtil.i().resolve(artifact);
-					String path = artifact.getFile().getAbsolutePath();
-					MavenUtil.i().getLog().warn(path);
-					filePaths.add(path);
-				} catch (ArtifactResolutionException e) {
-					MavenUtil.i().getLog().warn("cant resolve " + this.toString());
-				} catch (ArtifactNotFoundException e) {
-					MavenUtil.i().getLog().warn("cant resolve " + this.toString());
-				}
+
+				String path = artifact.getFile().getAbsolutePath();
+				MavenUtil.i().getLog().warn(path);
+				filePaths.add(path);
 			}
 		}
 		MavenUtil.i().getLog().debug("node filepath for " + toString() + " : " + filePaths);

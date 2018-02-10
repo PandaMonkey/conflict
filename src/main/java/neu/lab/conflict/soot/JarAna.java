@@ -1,5 +1,6 @@
 package neu.lab.conflict.soot;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import soot.Scene;
 import soot.SceneTransformer;
 import soot.SootClass;
 import soot.SootMethod;
+import soot.SourceLocator;
 import soot.Transform;
 
 public class JarAna extends SootAna {
@@ -35,7 +37,7 @@ public class JarAna extends SootAna {
 
 		Map<String, ClassVO> clses = new HashMap<String, ClassVO>();
 
-		PackManager.v().getPack("wjtp").add(new Transform("wjtp.myTrans", new DsTransformer(clses)));
+		PackManager.v().getPack("wjtp").add(new Transform("wjtp.myTrans", new DsTransformer(clses, jarFilePath)));
 		SootUtil.modifyLogOut();
 		try {
 			soot.Main.main(getArgs(jarFilePath.toArray(new String[0])).toArray(new String[0]));
@@ -56,17 +58,20 @@ public class JarAna extends SootAna {
 }
 
 class DsTransformer extends SceneTransformer {
-	private Map<String, ClassVO> clses;
+	private Map<String, ClassVO> clsTb;
+	private List<String> jarPaths;
 
-	public DsTransformer(Map<String, ClassVO> clses) {
-		this.clses = clses;
+	public DsTransformer(Map<String, ClassVO> clses, List<String> jarPaths) {
+		this.clsTb = clses;
+		this.jarPaths = jarPaths;
 	}
 
 	@Override
 	protected void internalTransform(String phaseName, Map<String, String> options) {
-		for (SootClass sootClass : Scene.v().getApplicationClasses()) {
+		for (String clsSig : SootUtil.getJarClasses(jarPaths)) {
+			SootClass sootClass = Scene.v().getSootClass(clsSig);
 			ClassVO clsVO = new ClassVO(sootClass.getName());
-			clses.put(sootClass.getName(), clsVO);
+			clsTb.put(sootClass.getName(), clsVO);
 			for (SootMethod sootMethod : sootClass.getMethods()) {
 				clsVO.addMethod(new MethodVO(sootMethod.getSignature(), clsVO));
 			}

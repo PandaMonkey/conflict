@@ -18,7 +18,6 @@ public class DepJars {
 		if (instance == null) {
 			instance = new DepJars(nodeAdapters);
 		}
-
 	}
 
 	private Set<DepJar> container;
@@ -31,17 +30,13 @@ public class DepJars {
 		}
 	}
 
-	public void addDep(NodeAdapter nodeAdapter) {
-
-	}
-
 	public DepJar getDep(String groupId, String artifactId, String version, String classifier) {
 		for (DepJar dep : container) {
 			if (dep.isSame(groupId, artifactId, version, classifier)) {
 				return dep;
 			}
 		}
-		MavenUtil.i().getLog().warn("cant find dep:" + groupId + "-" + artifactId + "-" + version + "-" + classifier);
+		MavenUtil.i().getLog().warn("cant find dep:" + groupId + ":" + artifactId + ":" + version + ":" + classifier);
 		return null;
 	}
 

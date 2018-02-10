@@ -59,6 +59,30 @@ public class DepJar {
 		return nodeAdapters;
 	}
 
+	public String getAllDepPath() {
+		StringBuilder sb = new StringBuilder(toString() + ":");
+		for (NodeAdapter node : getNodeAdapters()) {
+			sb.append("  [");
+			sb.append(node.getWholePath());
+			sb.append("]");
+		}
+		return sb.toString();
+
+	}
+
+	public String getValidDepPath() {
+		StringBuilder sb = new StringBuilder(toString() + ":");
+		for (NodeAdapter node : getNodeAdapters()) {
+			if (node.isNodeSelected()) {
+				sb.append("  [");
+				sb.append(node.getWholePath());
+				sb.append("]");
+			}
+		}
+		return sb.toString();
+
+	}
+
 	public boolean isSelected() {
 		for (NodeAdapter nodeAdapter : getNodeAdapters()) {
 			if (nodeAdapter.isNodeSelected())
@@ -79,6 +103,10 @@ public class DepJar {
 			}
 		}
 		return clses;
+	}
+
+	public ClassVO getClassVO(String clsSig) {
+		return getClsTb().get(clsSig);
 	}
 
 	// public Map<String,ClassVO> getClsTb(){
