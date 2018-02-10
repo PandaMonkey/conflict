@@ -7,9 +7,9 @@ import java.util.Map;
 import java.util.Set;
 
 import neu.lab.conflict.container.NodeAdapters;
+import neu.lab.conflict.risk.JarRiskAna;
 import neu.lab.conflict.soot.JarAna;
 import neu.lab.conflict.util.MavenUtil;
-import neu.lab.conflict.vo.risk.JarRiskAna;
 
 /**
  * 

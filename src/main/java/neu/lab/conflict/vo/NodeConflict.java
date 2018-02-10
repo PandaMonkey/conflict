@@ -3,8 +3,8 @@ package neu.lab.conflict.vo;
 import java.util.HashSet;
 import java.util.Set;
 
+import neu.lab.conflict.risk.ConflictRiskAna;
 import neu.lab.conflict.util.MavenUtil;
-import neu.lab.conflict.vo.risk.ConflictRiskAna;
 
 
 public class NodeConflict {

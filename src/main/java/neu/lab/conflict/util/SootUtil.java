@@ -39,9 +39,12 @@ public class SootUtil {
 	public static List<String> getJarClasses(List<String> paths) {
 		List<String> allCls = new ArrayList<String>();
 		for (String classPath : paths) {
-			if (!classPath.endsWith("tar.gz")) {
-				allCls.addAll(SourceLocator.v().getClassesUnder(classPath));
+			if(new File(classPath).exists()) {
+				if (!classPath.endsWith("tar.gz")) {
+					allCls.addAll(SourceLocator.v().getClassesUnder(classPath));
+				}
 			}
+			
 		}
 		return allCls;
 	}

@@ -12,10 +12,10 @@ import org.apache.maven.shared.dependency.tree.DependencyNode;
 
 import neu.lab.conflict.container.DepJars;
 import neu.lab.conflict.container.NodeAdapters;
+import neu.lab.conflict.risk.JarRiskAna;
+import neu.lab.conflict.risk.NodeRiskAna;
 import neu.lab.conflict.util.ClassifierUtil;
 import neu.lab.conflict.util.MavenUtil;
-import neu.lab.conflict.vo.risk.JarRiskAna;
-import neu.lab.conflict.vo.risk.NodeRiskAna;
 
 /**
  */

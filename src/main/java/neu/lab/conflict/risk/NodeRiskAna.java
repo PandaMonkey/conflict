@@ -1,4 +1,4 @@
-package neu.lab.conflict.vo.risk;
+package neu.lab.conflict.risk;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
