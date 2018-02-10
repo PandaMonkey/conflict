@@ -41,7 +41,7 @@ public class SootUtil {
 		for (String classPath : paths) {
 			if (new File(classPath).exists()) {
 				if (!classPath.endsWith("tar.gz")&&!classPath.endsWith(".pom")) {
-//					System.out.println("get class under:" + classPath);
+					System.out.println("get class under:" + classPath);
 					allCls.addAll(SourceLocator.v().getClassesUnder(classPath));
 				}else {
 					MavenUtil.i().getLog().warn(classPath + "is illegal classpath");
