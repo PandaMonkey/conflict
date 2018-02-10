@@ -39,12 +39,17 @@ public class SootUtil {
 	public static List<String> getJarClasses(List<String> paths) {
 		List<String> allCls = new ArrayList<String>();
 		for (String classPath : paths) {
-			if(new File(classPath).exists()) {
+			if (new File(classPath).exists()) {
 				if (!classPath.endsWith("tar.gz")) {
+					System.out.println("get class under:" + classPath);
 					allCls.addAll(SourceLocator.v().getClassesUnder(classPath));
+				}else {
+					MavenUtil.i().getLog().warn(classPath + "is illegal classpath");
 				}
+			} else {
+				MavenUtil.i().getLog().warn(classPath + "doesn't exist in local");
 			}
-			
+
 		}
 		return allCls;
 	}
