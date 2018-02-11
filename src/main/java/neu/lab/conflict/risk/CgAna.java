@@ -1,4 +1,4 @@
-package neu.lab.conflict.soot;
+package neu.lab.conflict.risk;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +12,7 @@ import java.util.Set;
 import neu.lab.conflict.Conf;
 import neu.lab.conflict.graph.Graph;
 import neu.lab.conflict.graph.Node;
-import neu.lab.conflict.risk.NodeRiskAna;
+import neu.lab.conflict.soot.SootAna;
 import neu.lab.conflict.util.SootUtil;
 import neu.lab.conflict.util.MavenUtil;
 import neu.lab.conflict.vo.MethodCall;

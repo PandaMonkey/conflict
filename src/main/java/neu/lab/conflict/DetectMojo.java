@@ -6,7 +6,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import neu.lab.conflict.container.DepJars;
 import neu.lab.conflict.container.FinalClasses;
 import neu.lab.conflict.container.NodeConflicts;
-import neu.lab.conflict.soot.CgAna;
+import neu.lab.conflict.risk.CgAna;
 import neu.lab.conflict.soot.JarAna;
 import neu.lab.conflict.vo.NodeConflict;
 

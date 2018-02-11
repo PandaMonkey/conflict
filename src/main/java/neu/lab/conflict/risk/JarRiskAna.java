@@ -3,7 +3,6 @@ package neu.lab.conflict.risk;
 import java.util.Set;
 
 import neu.lab.conflict.graph.Book;
-import neu.lab.conflict.soot.CgAna;
 import neu.lab.conflict.vo.ClassVO;
 import neu.lab.conflict.vo.DepJar;
 import neu.lab.conflict.vo.MethodVO;
