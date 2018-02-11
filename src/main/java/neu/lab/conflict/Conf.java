@@ -20,7 +20,7 @@ public class Conf {
 	
 	public static boolean ONLY_GET_SIMPLE = true;
 	
-	public static boolean DEL_OPTIONAL = true;
+	public static boolean DEL_OPTIONAL = false;
 	
 //	public static final String outSir = "D:\\ws\\sta\\";
 }
