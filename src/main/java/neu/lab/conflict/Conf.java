@@ -18,7 +18,7 @@ public class Conf {
 	public static final int PATH_DEP = 15;
 	public static String outDir = "D:\\ws\\sta\\";
 	
-	public static boolean ONLY_GET_SIMPLE = true;
+	public static boolean ONLY_GET_SIMPLE = false;
 	
 //	public static final String outSir = "D:\\ws\\sta\\";
 }
