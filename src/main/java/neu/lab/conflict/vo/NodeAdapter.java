@@ -33,15 +33,17 @@ public class NodeAdapter {
 
 	private void resolve() {
 		try {
-			if (null == node.getPremanagedVersion()) {
-				// artifact version of node is the version declared in pom.
-				if (!node.getArtifact().isResolved())
-					MavenUtil.i().resolve(node.getArtifact());
-			} else {
-				Artifact artifact = MavenUtil.i().getArtifact(getGroupId(), getArtifactId(), getVersion(), getType(),
-						getClassifier(), getScope());
-				if (!artifact.isResolved())
-					MavenUtil.i().resolve(artifact);
+			if (!isInnerProject()) {// inner project is target/classes
+				if (null == node.getPremanagedVersion()) {
+					// artifact version of node is the version declared in pom.
+					if (!node.getArtifact().isResolved())
+						MavenUtil.i().resolve(node.getArtifact());
+				} else {
+					Artifact artifact = MavenUtil.i().getArtifact(getGroupId(), getArtifactId(), getVersion(),
+							getType(), getClassifier(), getScope());
+					if (!artifact.isResolved())
+						MavenUtil.i().resolve(artifact);
+				}
 			}
 		} catch (ArtifactResolutionException e) {
 			MavenUtil.i().getLog().warn("cant resolve " + this.toString());
