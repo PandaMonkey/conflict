@@ -3,6 +3,7 @@ package neu.lab.conflict.statics;
 import java.util.ArrayList;
 import java.util.List;
 
+import neu.lab.conflict.vo.ClassVO;
 import neu.lab.conflict.vo.DepJar;
 import neu.lab.conflict.vo.MethodVO;
 
@@ -57,9 +58,12 @@ public class JarCmp {
 	private List<String> getOnlyMethod(DepJar total, DepJar some) {
 		List<String> onlyMthds = new ArrayList<String>();
 		for (String clsSig : clsSigs) {
-			for (MethodVO mthd : total.getClassVO(clsSig).getMthds()) {
-				if (!some.getClassVO(clsSig).hasMethod(mthd.getMthdSig()))
-					onlyMthds.add(mthd.getMthdSig());
+			ClassVO classVO = total.getClassVO(clsSig);
+			if(classVO!=null) {
+				for (MethodVO mthd : classVO.getMthds()) {
+					if (!some.getClassVO(clsSig).hasMethod(mthd.getMthdSig()))
+						onlyMthds.add(mthd.getMthdSig());
+				}
 			}
 		}
 		return onlyMthds;

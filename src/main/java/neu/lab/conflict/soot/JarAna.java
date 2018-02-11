@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import neu.lab.conflict.util.SootUtil;
+import neu.lab.conflict.Conf;
 import neu.lab.conflict.util.MavenUtil;
 import neu.lab.conflict.vo.ClassVO;
 import neu.lab.conflict.vo.MethodVO;
@@ -72,10 +73,28 @@ class DsTransformer extends SceneTransformer {
 			SootClass sootClass = Scene.v().getSootClass(clsSig);
 			ClassVO clsVO = new ClassVO(sootClass.getName());
 			clsTb.put(sootClass.getName(), clsVO);
-			for (SootMethod sootMethod : sootClass.getMethods()) {
-				clsVO.addMethod(new MethodVO(sootMethod.getSignature(), clsVO));
+			if (Conf.ONLY_GET_SIMPLE) {// only add simple method in simple class
+				if (isSimpleCls(sootClass)) {
+					for (SootMethod sootMethod : sootClass.getMethods()) {
+						if (sootMethod.getParameterCount() == 0)
+							clsVO.addMethod(new MethodVO(sootMethod.getSignature(), clsVO));
+					}
+				}
+			} else {// add all method
+				for (SootMethod sootMethod : sootClass.getMethods()) {
+					clsVO.addMethod(new MethodVO(sootMethod.getSignature(), clsVO));
+				}
 			}
 		}
+	}
+
+	private boolean isSimpleCls(SootClass sootClass) {
+		for (SootMethod sootMethod : sootClass.getMethods()) {
+			if (sootMethod.isConstructor() && sootMethod.getParameterCount() == 0) // exist constructor that doesn't
+																					// need param
+				return true;
+		}
+		return false;
 	}
 
 }

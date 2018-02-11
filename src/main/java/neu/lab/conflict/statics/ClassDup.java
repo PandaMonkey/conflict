@@ -46,9 +46,11 @@ public class ClassDup {
 	private Set<String> getAllMthd() {
 		Set<String> allMthds = new HashSet<String>();
 		for (DepJar depJar : depJars) {
-			ClassVO clsVO = depJar.getClsTb().get(clsSig);
-			for (MethodVO mthd : clsVO.getMthds()) {
-				allMthds.add(mthd.getMthdSig());
+			ClassVO clsVO = depJar.getClassVO(clsSig);
+			if (clsVO != null) {
+				for (MethodVO mthd : clsVO.getMthds()) {
+					allMthds.add(mthd.getMthdSig());
+				}
 			}
 		}
 		return allMthds;
@@ -58,11 +60,13 @@ public class ClassDup {
 		List<DepJar> yesJars = new ArrayList<DepJar>();
 		List<DepJar> noJars = new ArrayList<DepJar>();
 		for (DepJar depJar : depJars) {
-			ClassVO clsVO = depJar.getClsTb().get(clsSig);
-			if (clsVO.hasMethod(mthdSig))
-				yesJars.add(depJar);
-			else
-				noJars.add(depJar);
+			ClassVO clsVO = depJar.getClassVO(clsSig);
+			if(clsVO != null) {
+				if (clsVO.hasMethod(mthdSig))
+					yesJars.add(depJar);
+				else
+					noJars.add(depJar);
+			}
 		}
 		if (noJars.size() == 0)// both have
 			return null;
