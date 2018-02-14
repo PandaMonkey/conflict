@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import neu.lab.conflict.Conf;
+import neu.lab.conflict.graph.Dog;
 import neu.lab.conflict.graph.Graph;
 import neu.lab.conflict.graph.Node;
 import neu.lab.conflict.soot.SootAna;
@@ -56,7 +57,8 @@ public class CgAna extends SootAna {
 		nodeAnaUnit.setRisk1Mthds(transformer.getRisk1Mthds());
 		nodeAnaUnit.setRisk2Mthds(transformer.getRisk2Mthds());
 
-		nodeAnaUnit.setBooks(transformer.getGraph().getBooks());
+		Graph graph = transformer.getGraph();
+		nodeAnaUnit.setBooks(new Dog(graph).findRlt(transformer.getRisk2Mthds()));
 
 		soot.G.reset();
 
@@ -80,9 +82,8 @@ class CgTf extends SceneTransformer {
 	private Set<String> thrownMthds;
 	private Set<String> risk1Mthds;// thrown,rch from host
 
-	private Set<String> risk2Mthds;// all target Node in riskCalls.
+	private Set<String> risk2Mthds;//reached and thrown and called by method in other jar.
 	private List<MethodCall> riskCalls;// source is from other jar,target is to risk1Mthds.
-	// private Map<String, Book> books;
 
 	public CgTf(NodeRiskAna sootAnaUnit, Set<String> thrownMthds) {
 		super();
@@ -139,8 +140,6 @@ class CgTf extends SceneTransformer {
 				risk2Mthds.add(edge.tgt().getSignature());
 			}
 		}
-		// Graph graph = getGraph();
-		// books = graph.getBooks();
 
 	}
 

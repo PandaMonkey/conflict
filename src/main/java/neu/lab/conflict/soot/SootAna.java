@@ -1,8 +1,11 @@
 package neu.lab.conflict.soot;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import neu.lab.conflict.util.MavenUtil;
 
 public abstract class SootAna {
 
@@ -21,8 +24,13 @@ public abstract class SootAna {
 
 	protected void addClassPath(List<String> argsList, String[] jarFilePaths) {
 		for (String jarFilePath : jarFilePaths) {
-			argsList.add("-process-dir");
-			argsList.add(jarFilePath);
+			if(new File(jarFilePath).exists()) {
+				argsList.add("-process-dir");
+				argsList.add(jarFilePath);	
+			}else {
+				MavenUtil.i().getLog().warn("add classpath error:doesn't exist file "+jarFilePath);
+			}
+			
 		}
 	}
 

@@ -12,10 +12,10 @@ import neu.lab.conflict.util.MavenUtil;
 import neu.lab.conflict.vo.DepJar;
 import neu.lab.conflict.vo.NodeConflict;
 
-public class ResultWriter {
+public class RIskPathWriter {
 	PrintStream printer;
 
-	public ResultWriter() {
+	public RIskPathWriter() {
 		try {
 			String outPath = "d://conflict.txt";
 			// File out = new File(outPath);

@@ -14,15 +14,9 @@ import neu.lab.conflict.vo.MethodCall;
 
 public class Graph {
 	private Map<String, Node> name2node;
-	private Map<String, Book> books;
-
-	public Map<String, Book> getBooks() {
-		return books;
-	}
 
 	public Graph(Set<Node> nodes, List<MethodCall> calls, Set<String> risk2mthds) {
-		// TODO garbage relation can filter ;
-		// no in-method(except in host) or no out-method(except in conflict) should
+
 		// filter
 		MavenUtil.i().getLog().info("graph-before-filter nodes size:" + nodes.size() + " calls size:" + calls.size());
 		if (Conf.FLT_CALL)
@@ -41,8 +35,6 @@ public class Graph {
 			filterNode(risk2mthds);
 		MavenUtil.i().getLog()
 				.info("graph-after-filter nodes size:" + name2node.size() + " calls size:" + calls.size());
-		Dog dog = new Dog(this);
-		books = dog.findRlt(risk2mthds);
 	}
 
 	private void filterDangerImpl() {
@@ -124,10 +116,10 @@ public class Graph {
 			sb.append("============================\n");
 			sb.append(name2node.get(name).toString());
 		}
-		for (String node : books.keySet()) {
-			sb.append(books.get(node).toString());
-			sb.append("\n");
-		}
+//		for (String node : books.keySet()) {
+//			sb.append(books.get(node).toString());
+//			sb.append("\n");
+//		}
 		return sb.toString();
 	}
 }

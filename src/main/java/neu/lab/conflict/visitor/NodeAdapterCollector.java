@@ -21,7 +21,9 @@ public class NodeAdapterCollector implements DependencyNodeVisitor {
 		MavenUtil.i().getLog().info(node.toNodeString() + " type:" + node.getArtifact().getType() + " version"
 				+ node.getArtifact().getVersionRange() + " optional:" + node.getArtifact().isOptional());
 		if (Conf.DEL_OPTIONAL) {
-			if (!node.getArtifact().isOptional()) {
+			if (node.getArtifact().isOptional()) {
+				return false;
+			}else {
 				nodeAdapters.addNodeAapter(new NodeAdapter(node));
 			}
 		} else {

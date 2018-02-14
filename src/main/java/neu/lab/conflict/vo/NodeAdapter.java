@@ -194,7 +194,7 @@ public class NodeAdapter {
 
 	@Override
 	public String toString() {
-		return getGroupId() + ":" + getArtifactId() + ":" + getVersion() + ":" + getClassifier();
+		return getGroupId() + ":" + getArtifactId() + ":" + getVersion() + ":" + getClassifier()+":"+getScope();
 	}
 
 	public String getWholePath() {
