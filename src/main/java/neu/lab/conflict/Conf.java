@@ -22,7 +22,7 @@ public class Conf {
 	
 	public static boolean DEL_OPTIONAL = false;
 	
-	public static boolean DEL_PROVIDE = true;
+	public static boolean DEL_PROVIDED = true;
 	
 //	public static final String outSir = "D:\\ws\\sta\\";
 }

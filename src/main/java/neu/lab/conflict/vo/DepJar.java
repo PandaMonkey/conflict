@@ -83,6 +83,15 @@ public class DepJar {
 
 	}
 
+	public boolean isProvided() {
+		for (NodeAdapter node : getNodeAdapters()) {
+			if (node.isNodeSelected()) {
+				return "provided".equals(node.getScope());
+			}
+		}
+		return false;
+	}
+
 	public boolean isSelected() {
 		for (NodeAdapter nodeAdapter : getNodeAdapters()) {
 			if (nodeAdapter.isNodeSelected())

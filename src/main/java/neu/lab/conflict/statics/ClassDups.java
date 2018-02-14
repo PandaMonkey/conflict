@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import neu.lab.conflict.Conf;
 import neu.lab.conflict.container.DepJars;
 import neu.lab.conflict.util.SootUtil;
 import neu.lab.conflict.vo.DepJar;
@@ -16,9 +17,18 @@ public class ClassDups {
 		container = new ArrayList<ClassDup>();
 		for (DepJar depJar : depJars.getAllDepJar()) {
 			if (depJar.isSelected()) {
-				List<String> allCls = SootUtil.getJarClasses(depJar);
-				for (String cls : allCls) {
-					addCls(cls, depJar);
+				if(Conf.DEL_PROVIDED) {
+					if(!depJar.isProvided()) {
+						List<String> allCls = SootUtil.getJarClasses(depJar);
+						for (String cls : allCls) {
+							addCls(cls, depJar);
+						}
+					}
+				}else {
+					List<String> allCls = SootUtil.getJarClasses(depJar);
+					for (String cls : allCls) {
+						addCls(cls, depJar);
+					}
 				}
 			}
 		}
