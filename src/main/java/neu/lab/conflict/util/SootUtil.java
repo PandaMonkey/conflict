@@ -40,7 +40,7 @@ public class SootUtil {
 		List<String> allCls = new ArrayList<String>();
 		for (String classPath : paths) {
 			if (new File(classPath).exists()) {
-				if (!classPath.endsWith("tar.gz")&&!classPath.endsWith(".pom")) {
+				if (!classPath.endsWith("tar.gz")&&!classPath.endsWith(".pom")&&!classPath.endsWith(".war")) {
 					System.out.println("get class under:" + classPath);
 					allCls.addAll(SourceLocator.v().getClassesUnder(classPath));
 				}else {
