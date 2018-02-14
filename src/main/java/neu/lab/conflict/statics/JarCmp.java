@@ -46,8 +46,8 @@ public class JarCmp {
 	private String getJarString(DepJar total, DepJar some) {
 		StringBuilder sb = new StringBuilder();
 		List<String> onlyMthds = getOnlyMethod(total, some);
+		sb.append("   methods that only exist in " + total.getValidDepPath() + "\n");
 		if (onlyMthds.size() > 0) {
-			sb.append("   methods that only exist in "  + total.getValidDepPath() + "\n");
 			for (String onlyMthd : onlyMthds) {
 				sb.append(onlyMthd + "\n");
 			}
@@ -59,7 +59,7 @@ public class JarCmp {
 		List<String> onlyMthds = new ArrayList<String>();
 		for (String clsSig : clsSigs) {
 			ClassVO classVO = total.getClassVO(clsSig);
-			if(classVO!=null) {
+			if (classVO != null) {
 				for (MethodVO mthd : classVO.getMthds()) {
 					if (!some.getClassVO(clsSig).hasMethod(mthd.getMthdSig()))
 						onlyMthds.add(mthd.getMthdSig());
