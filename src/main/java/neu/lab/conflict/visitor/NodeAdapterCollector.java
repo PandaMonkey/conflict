@@ -19,11 +19,11 @@ public class NodeAdapterCollector implements DependencyNodeVisitor {
 	public boolean visit(DependencyNode node) {
 
 		MavenUtil.i().getLog().info(node.toNodeString() + " type:" + node.getArtifact().getType() + " version"
-				+ node.getArtifact().getVersionRange() + " optional:" + node.getArtifact().isOptional());
+				+ node.getArtifact().getVersionRange() + " selected:" + (node.getState() == DependencyNode.INCLUDED));
 		if (Conf.DEL_OPTIONAL) {
 			if (node.getArtifact().isOptional()) {
 				return false;
-			}else {
+			} else {
 				nodeAdapters.addNodeAapter(new NodeAdapter(node));
 			}
 		} else {

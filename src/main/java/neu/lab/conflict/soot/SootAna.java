@@ -11,9 +11,12 @@ public abstract class SootAna {
 
 	protected List<String> getArgs(String[] jarFilePaths) {
 		List<String> argsList = new ArrayList<String>();
-
-		addGenArg(argsList);
 		addClassPath(argsList, jarFilePaths);
+		if(argsList.size()==0) {//this class can't analysis 
+			return argsList;
+		}
+		
+		addGenArg(argsList);
 		addCgArgs(argsList);
 		addIgrArgs(argsList);
 
@@ -24,25 +27,34 @@ public abstract class SootAna {
 
 	protected void addClassPath(List<String> argsList, String[] jarFilePaths) {
 		for (String jarFilePath : jarFilePaths) {
-			if(new File(jarFilePath).exists()) {
-				argsList.add("-process-dir");
-				argsList.add(jarFilePath);	
-			}else {
-				MavenUtil.i().getLog().warn("add classpath error:doesn't exist file "+jarFilePath);
+			if (new File(jarFilePath).exists()) {
+				if (canAna(jarFilePath)) {
+					argsList.add("-process-dir");
+					argsList.add(jarFilePath);
+				}else {
+					MavenUtil.i().getLog().warn("add classpath error:can't analysis file " + jarFilePath);
+				}
+			} else {
+				MavenUtil.i().getLog().warn("add classpath error:doesn't exist file " + jarFilePath);
 			}
-			
+
 		}
 	}
 
-	protected void addGenArg(List<String> argsList) {
+	private boolean canAna(String jarFilePath) {
+		if(!jarFilePath.contains("\\asm\\")) {
+			return true;
+		}
+		return false;
+	}
 
+	protected void addGenArg(List<String> argsList) {
 
 		argsList.add("-ire");
 		argsList.add("-app");
 		argsList.add("-allow-phantom-refs");
 		argsList.add("-w");
 
-		
 	}
 
 	protected void addIgrArgs(List<String> argsList) {

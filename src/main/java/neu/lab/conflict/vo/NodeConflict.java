@@ -6,7 +6,6 @@ import java.util.Set;
 import neu.lab.conflict.risk.ConflictRiskAna;
 import neu.lab.conflict.util.MavenUtil;
 
-
 public class NodeConflict {
 	private String groupId;
 	private String artifactId;
@@ -14,7 +13,7 @@ public class NodeConflict {
 	private Set<NodeAdapter> nodes;
 	private Set<DepJar> depJars;
 	private DepJar usedDepJar;
-//	private ConflictRiskAna riskAna;
+	// private ConflictRiskAna riskAna;
 
 	public NodeConflict(String groupId, String artifactId) {
 		nodes = new HashSet<NodeAdapter>();
@@ -55,16 +54,19 @@ public class NodeConflict {
 		return depJars;
 	}
 
+	public Set<NodeAdapter> getNodeAdapters() {
+		return this.nodes;
+	}
 
 	public boolean isConflict() {
 		return getDepJars().size() > 1;
 	}
 
 	public ConflictRiskAna getRiskAna() {
-//		if(riskAna==null) {
-//			riskAna = ConflictRiskAna.getConflictRiskAna(this);
-//		}
-//		return riskAna;
+		// if(riskAna==null) {
+		// riskAna = ConflictRiskAna.getConflictRiskAna(this);
+		// }
+		// return riskAna;
 		return ConflictRiskAna.getConflictRiskAna(this);
 	}
 
@@ -74,7 +76,7 @@ public class NodeConflict {
 		for (DepJar depJar : depJars) {
 			str = str + depJar.getVersion() + ":" + depJar.getClassifier() + "-";
 		}
-		str = str + "-->used jar:" + getUsedDepJar().getVersion()+":"+getUsedDepJar().getClassifier();
+		str = str + "-->used jar:" + getUsedDepJar().getVersion() + ":" + getUsedDepJar().getClassifier();
 		return str;
 	}
 }

@@ -1,6 +1,5 @@
 package neu.lab.conflict.soot;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +15,6 @@ import soot.Scene;
 import soot.SceneTransformer;
 import soot.SootClass;
 import soot.SootMethod;
-import soot.SourceLocator;
 import soot.Transform;
 
 public class JarAna extends SootAna {
@@ -40,10 +38,12 @@ public class JarAna extends SootAna {
 
 		PackManager.v().getPack("wjtp").add(new Transform("wjtp.myTrans", new DsTransformer(clses, jarFilePath)));
 		SootUtil.modifyLogOut();
-		try {
-			soot.Main.main(getArgs(jarFilePath.toArray(new String[0])).toArray(new String[0]));
-		} catch (IllegalArgumentException e) {
-			MavenUtil.i().getLog().error("cant deconstruct " + jarFilePath, e);
+
+		List<String> args = getArgs(jarFilePath.toArray(new String[0]));
+		if (args.size() == 0) {
+			
+		} else {
+			soot.Main.main(args.toArray(new String[0]));
 		}
 
 		soot.G.reset();

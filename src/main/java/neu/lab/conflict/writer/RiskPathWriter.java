@@ -8,19 +8,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import neu.lab.conflict.Conf;
 import neu.lab.conflict.util.MavenUtil;
 import neu.lab.conflict.vo.DepJar;
 import neu.lab.conflict.vo.NodeConflict;
 
-public class RIskPathWriter {
+public class RiskPathWriter {
 	PrintStream printer;
 
-	public RIskPathWriter() {
+	public RiskPathWriter() {
 		try {
-			String outPath = "d://conflict.txt";
-			// File out = new File(outPath);
-			// if (out.exists())
-			// out.delete();
+			String outPath = Conf.outDir + "conflict.txt";
 			printer = new PrintStream(new FileOutputStream(new File(outPath), true));
 		} catch (FileNotFoundException e) {
 			MavenUtil.i().getLog().error("cant open risk result file!", e);

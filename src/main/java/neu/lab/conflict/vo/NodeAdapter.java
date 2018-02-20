@@ -206,4 +206,13 @@ public class NodeAdapter {
 		}
 		return sb.toString();
 	}
+	public int getNodeDepth() {
+		int depth = 1;
+		NodeAdapter father = getParent();
+		while (null != father) {
+			depth++;
+			father = father.getParent();
+		}
+		return depth;
+	}
 }
