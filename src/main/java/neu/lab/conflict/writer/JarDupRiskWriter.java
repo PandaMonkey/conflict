@@ -26,26 +26,7 @@ public class JarDupRiskWriter {
 					if (depJar1 != null && depJar2 != null) {
 						printer.println("=======conflict:" + "<" + depJar1.toString() + ">" + "<" + depJar2.toString() + ">"
 								+ " size:" + nodeConflict.getNodeAdapters().size());
-						printer.println("====Risk for ClassNotFoundException/NotClassDefFoundError:");
-						printer.println("  classes that only exist in "+depJar1.getValidDepPath());
-						for(String clsSig:depJar1.getOnlyClses(depJar2)) {
-							printer.println(clsSig);
-						}
-						printer.println("  classes that only exist in "+depJar2.getValidDepPath());
-						for(String clsSig:depJar2.getOnlyClses(depJar1)) {
-							printer.println(clsSig);
-						}
-						
-						printer.println("====Risk for NoSuchMethodException/NoSuchMethodError:");
-						printer.println("  methods that only exist in "+depJar1.getValidDepPath());
-						for(String clsSig:depJar1.getOnlyMthds(depJar2)) {
-							printer.println(clsSig);
-						}
-						printer.println("  methods that only exist in "+depJar2.getValidDepPath());
-						for(String clsSig:depJar2.getOnlyMthds(depJar1)) {
-							printer.println(clsSig);
-						}
-						printer.println();
+						printRisk(printer,depJar1,depJar2);
 					}
 				}
 			}
@@ -56,6 +37,29 @@ public class JarDupRiskWriter {
 			MavenUtil.i().getLog().error("can't write versionupdate:", e);
 		}
 
+	}
+	public void printRisk(PrintWriter printer,DepJar depJar1,DepJar depJar2) {
+		
+		printer.println("====Risk for ClassNotFoundException/NotClassDefFoundError:");
+		printer.println("  classes that only exist in "+depJar1.toString());
+		for(String clsSig:depJar1.getOnlyClses(depJar2)) {
+			printer.println(clsSig);
+		}
+		printer.println("  classes that only exist in "+depJar2.toString());
+		for(String clsSig:depJar2.getOnlyClses(depJar1)) {
+			printer.println(clsSig);
+		}
+		
+		printer.println("====Risk for NoSuchMethodException/NoSuchMethodError:");
+		printer.println("  methods that only exist in "+depJar1.toString());
+		for(String clsSig:depJar1.getOnlyMthds(depJar2)) {
+			printer.println(clsSig);
+		}
+		printer.println("  methods that only exist in "+depJar2.toString());
+		for(String clsSig:depJar2.getOnlyMthds(depJar1)) {
+			printer.println(clsSig);
+		}
+		printer.println();
 	}
 
 }

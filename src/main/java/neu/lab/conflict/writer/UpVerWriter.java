@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 
 import neu.lab.conflict.container.NodeConflicts;
 import neu.lab.conflict.util.MavenUtil;
+import neu.lab.conflict.vo.DepJar;
 import neu.lab.conflict.vo.NodeAdapter;
 import neu.lab.conflict.vo.NodeConflict;
 
@@ -28,6 +29,7 @@ public class UpVerWriter {
 										+ node2.toString() + ">" + " size:" + nodeConflict.getNodeAdapters().size());
 								printer.println(node1.getWholePath());
 								printer.println(node2.getWholePath());
+								printRisk(printer,node1.getDepJar(),node2.getDepJar());
 								printer.println();
 							}
 						}
@@ -84,5 +86,28 @@ public class UpVerWriter {
 			}
 		}
 		return false;
+	}
+	public void printRisk(PrintWriter printer,DepJar depJar1,DepJar depJar2) {
+		
+		printer.println("====Risk for ClassNotFoundException/NotClassDefFoundError:");
+		printer.println("  classes that only exist in "+depJar1.toString());
+		for(String clsSig:depJar1.getOnlyClses(depJar2)) {
+			printer.println(clsSig);
+		}
+		printer.println("  classes that only exist in "+depJar2.toString());
+		for(String clsSig:depJar2.getOnlyClses(depJar1)) {
+			printer.println(clsSig);
+		}
+		
+		printer.println("====Risk for NoSuchMethodException/NoSuchMethodError:");
+		printer.println("  methods that only exist in "+depJar1.toString());
+		for(String clsSig:depJar1.getOnlyMthds(depJar2)) {
+			printer.println(clsSig);
+		}
+		printer.println("  methods that only exist in "+depJar2.toString());
+		for(String clsSig:depJar2.getOnlyMthds(depJar1)) {
+			printer.println(clsSig);
+		}
+		printer.println();
 	}
 }
