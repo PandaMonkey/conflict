@@ -24,6 +24,8 @@ public class Conf {
 	
 	public static boolean DEL_PROVIDED = true;
 	
+	public static boolean DEL_TEST = true;
+	
 //	public static final String outSir = "D:\\ws\\sta\\";
 }
 

@@ -23,13 +23,20 @@ public class NodeAdapterCollector implements DependencyNodeVisitor {
 		if (Conf.DEL_OPTIONAL) {
 			if (node.getArtifact().isOptional()) {
 				return false;
-			} else {
-				nodeAdapters.addNodeAapter(new NodeAdapter(node));
 			}
-		} else {
-			nodeAdapters.addNodeAapter(new NodeAdapter(node));
 		}
-
+		if (Conf.DEL_PROVIDED) {
+			if ("provided".equals(node.getArtifact().getScope())) {
+				return false;
+			}
+		}
+		if (Conf.DEL_TEST) {
+			if ("test".equals(node.getArtifact().getScope())) {
+				return false;
+			}
+		}
+		
+		nodeAdapters.addNodeAapter(new NodeAdapter(node));
 		return true;
 	}
 

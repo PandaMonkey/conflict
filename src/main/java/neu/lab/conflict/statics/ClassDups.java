@@ -17,18 +17,9 @@ public class ClassDups {
 		container = new ArrayList<ClassDup>();
 		for (DepJar depJar : depJars.getAllDepJar()) {
 			if (depJar.isSelected()) {
-				if(Conf.DEL_PROVIDED) {
-					if(!depJar.isProvided()) {
-						List<String> allCls = SootUtil.getJarClasses(depJar);
-						for (String cls : allCls) {
-							addCls(cls, depJar);
-						}
-					}
-				}else {
-					List<String> allCls = SootUtil.getJarClasses(depJar);
-					for (String cls : allCls) {
-						addCls(cls, depJar);
-					}
+				List<String> allCls = SootUtil.getJarClasses(depJar);
+				for (String cls : allCls) {
+					addCls(cls, depJar);
 				}
 			}
 		}
@@ -57,6 +48,5 @@ public class ClassDups {
 		}
 		clsDup.addDepJar(depJar);
 	}
-
 
 }

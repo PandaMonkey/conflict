@@ -1,5 +1,6 @@
 package neu.lab.conflict.vo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -22,7 +23,7 @@ public class DepJar {
 	private String version;// version
 	private String classifier;
 	private List<String> jarFilePaths;// host project may have multiple source.
-	private Map<String, ClassVO> clses;// all class in jar
+	private Map<String, ClassVO> clsTb;// all class in jar
 	private Set<NodeAdapter> nodeAdapters;// all
 	private JarRiskAna jarRisk;
 
@@ -110,17 +111,17 @@ public class DepJar {
 	}
 
 	public Map<String, ClassVO> getClsTb() {
-		if (clses == null) {// havent initial
+		if (clsTb == null) {// havent initial
 			if (null == this.getJarFilePaths())// no file
-				clses = new HashMap<String, ClassVO>();
+				clsTb = new HashMap<String, ClassVO>();
 			else {
-				clses = JarAna.i().deconstruct(this.getJarFilePaths());
-				for (ClassVO clsVO : clses.values()) {
+				clsTb = JarAna.i().deconstruct(this.getJarFilePaths());
+				for (ClassVO clsVO : clsTb.values()) {
 					clsVO.setDepJar(this);
 				}
 			}
 		}
-		return clses;
+		return clsTb;
 	}
 
 	public ClassVO getClassVO(String clsSig) {
@@ -144,6 +145,33 @@ public class DepJar {
 			}
 		}
 		return allMthd;
+	}
+
+	public List<String> getOnlyClses(DepJar otherJar) {
+		List<String> onlyCls = new ArrayList<String>();
+		for (String clsSig : getClsTb().keySet()) {
+			ClassVO otherCls = otherJar.getClassVO(clsSig);
+			if (otherCls == null) {
+				onlyCls.add(clsSig);
+			}
+		}
+		return onlyCls;
+	}
+
+	public List<String> getOnlyMthds(DepJar otherJar) {
+		List<String> onlyMthds = new ArrayList<String>();
+		for (String clsSig : getClsTb().keySet()) {
+			ClassVO otherCls = otherJar.getClassVO(clsSig);
+			if (otherCls != null) {
+				ClassVO cls = getClassVO(clsSig);
+				for (MethodVO mthd : cls.getMthds()) {
+					if (!otherCls.hasMethod(mthd.getMthdSig())) {
+						onlyMthds.add(mthd.getMthdSig());
+					}
+				}
+			}
+		}
+		return onlyMthds;
 	}
 
 	@Override
