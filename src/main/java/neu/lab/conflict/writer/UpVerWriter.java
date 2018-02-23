@@ -30,13 +30,11 @@ public class UpVerWriter {
 								printer.println(node2.getWholePath());
 								printer.println();
 							}
-
 						}
 					}
 				}
 			}
 
-			printer.println("\n\n");
 			printer.close();
 		} catch (Exception e) {
 			MavenUtil.i().getLog().error("can't write versionupdate:", e);
