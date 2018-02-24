@@ -6,17 +6,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 import neu.lab.conflict.container.NodeAdapters;
 import neu.lab.conflict.util.MavenUtil;
 import neu.lab.conflict.vo.NodeAdapter;
 
 public class VersionWriter {
-
-
-
 	public void write(String outPath) {
 		 String groupId = "";
 		 String artifactId ="";
@@ -30,10 +25,10 @@ public class VersionWriter {
 			} catch (Exception e) {
 			}
 			PrintWriter printer = new PrintWriter(new BufferedWriter(new FileWriter(new File(outPath), true)));
-			printer.println("===============projectPath->" + MavenUtil.i().getProjectInfo());
 			for (NodeAdapter node : NodeAdapters.i().getAllNodeAdapter()) {
 				if(groupId.equals(node.getGroupId())&&artifactId.equals(node.getArtifactId())) {
-					printer.println(node.getVersion());
+					printer.println("===============projectPath->" + MavenUtil.i().getProjectInfo());
+					printer.println(node.getVersion()+":"+node.getWholePath());
 				}
 			}
 			printer.close();
