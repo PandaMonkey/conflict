@@ -26,6 +26,8 @@ public class Conf {
 	
 	public static boolean DEL_TEST = true;
 	
+	public static boolean PRINT_JAR_DUP = false;
+	
 //	public static final String outSir = "D:\\ws\\sta\\";
 }
 
